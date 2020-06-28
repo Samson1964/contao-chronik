@@ -1,4 +1,3 @@
-<?php //$this->showTemplateVars(); ?>
 <?php
 	$GLOBALS['TL_CSS']['chronik'] = 'system/modules/chronik/assets/default.css';
 ?> 
@@ -23,15 +22,17 @@
 		<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
 	<?php endif; ?> 
 
-	<?php foreach($this->data as $array): ?>
-		<div class="item">
-			<div class="timerange"><?= $array['zeitraum'] ?></div>
-			<?php if($array['titel']): ?><div class="title"><?= $array['titel'] ?></div><?php endif; ?>
-			<?php if($array['text']): ?><div class="teaser"><?= $array['text'] ?></div><?php endif; ?>
-			<?php if($array['quelle']): ?><div class="source"><?= $array['quelle'] ?></div><?php endif; ?>
-			<?php if($array['vereine']): ?><div class="clubs">Vereine: <?= $array['vereine'] ?></div><?php endif; ?>
-			<?php if($array['spieler']): ?><div class="clubs">Spieler: <?= $array['spieler'] ?></div><?php endif; ?>
-		</div>
-	<?php endforeach; ?>
-	
+	<?php if($this->data): ?>
+		<?php foreach($this->data as $array): ?>
+			<div class="item">
+				<div class="timerange"><?= $array['zeitraum'] ?></div>
+				<?php if($array['titel']): ?><div class="title"><?= $array['titel'] ?></div><?php endif; ?>
+				<?php if($array['text']): ?><div class="teaser"><?= $array['text'] ?></div><?php endif; ?>
+				<?php if($array['quelle']): ?><div class="source"><?= $array['quelle'] ?></div><?php endif; ?>
+				<?php if($array['vereine']): ?><div class="clubs">Vereine: <?= $array['vereine'] ?></div><?php endif; ?>
+				<?php if($array['spieler']): ?><div class="clubs">Spieler: <?= $array['spieler'] ?></div><?php endif; ?>
+			</div>
+		<?php endforeach; ?>
+	<?php endif; ?>
+
 </div> 

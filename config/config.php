@@ -11,7 +11,7 @@
  * @copyright Frank Hoppe 2014
  */
 
-define(ALIAS_CHRONIK, 'chronik'); // Alias der Chronikseite
+define('ALIAS_CHRONIK', 'chronik'); // Alias der Chronikseite
 
 // Array mit zulässigen Zeitabschnitten für Links, Index 0 ist der Standardwert
 $GLOBALS['CHRONIKLINKS'] = array
@@ -59,6 +59,7 @@ $GLOBALS['BE_MOD']['dsb']['chronik'] = array
 (
 	'tables'         => array('tl_chronik'),
 	'icon'           => 'system/modules/chronik/assets/images/icon.png',
+	'stylesheet'     => 'system/modules/chronik/assets/style.css' 
 );
 
 /**
@@ -71,3 +72,4 @@ $GLOBALS['FE_MOD']['chronik'] = array
 
 // http://de.contaowiki.org/Strukturierte_URLs
 $GLOBALS['TL_HOOKS']['getPageIdFromUrl'][] = array('Chronik\Helper', 'getParamsFromUrl');
+

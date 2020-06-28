@@ -43,6 +43,8 @@ $GLOBALS['TL_DCA']['tl_chronik'] = array
 		),
 		'label' => array
 		(
+			'fields'                  => array('from_date'), // Wird nicht benötigt, es gibt keine Labels für die List-View
+			'format'                  => '%s',
 			'label_callback'          => array('tl_chronik', 'listHistory'),
 			'group_callback'          => array('tl_chronik', 'groupFormat')
 		), 
@@ -155,6 +157,7 @@ $GLOBALS['TL_DCA']['tl_chronik'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_chronik']['from_date'],
 			'exclude'                 => true,
 			'filter'                  => true,
+			'flag'                    => 12,
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
@@ -440,13 +443,28 @@ class tl_chronik extends Backend
 		$text = $arrRow['from_date'] ? \Samson\Helper::getDateString($arrRow['from_date']) : '';
 		$text .= $arrRow['to_date'] ? ' - '.\Samson\Helper::getDateString($arrRow['to_date']) : '';
 		$text .= $arrRow['title'] ? ': '.$arrRow['title'] : '';
-		
-		$temp = '<div class="cte_type ' . $key . '"><b>'.$text.'</b></div>';
-		$temp .= '<div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h64' : '') . ' block">';
-		$temp .= '<div class="tl_gray">';
-		if($arrRow['text']) $temp .= strip_tags($arrRow['text']) . '<br><br>';
-		if($arrRow['source']) $temp .= '[<i>Quelle: ' . $arrRow['source'] . '</i>]';
-		return $temp.'</div></div>';
+
+		if(version_compare(VERSION, '4', '<')) 
+		{
+			$temp = '<div class="cte_type ' . $key . '"><b>'.$text.'</b></div>';
+			$temp .= '<div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h64' : '') . ' block">';
+			$temp .= '<div class="tl_gray">';
+			if($arrRow['text']) $temp .= strip_tags($arrRow['text']) . '<br><br>';
+			if($arrRow['source']) $temp .= '[<i>Quelle: ' . $arrRow['source'] . '</i>]';
+			$temp .= '</div></div>' . "\n";
+		} 
+		else 
+		{
+			$temp = '<div class="cte_type ' . $key . '"><strong>' . $text . '</strong></div>';
+			$temp .= '<div class="limit_height' . (!Config::get('doNotCollapse') ? ' h38' : '') . '">';
+			//$temp .= '<div class="tl_gray">';
+			if($arrRow['text']) $temp .= strip_tags($arrRow['text']) . '<br><br>';
+			if($arrRow['source']) $temp .= '[<i>Quelle: ' . $arrRow['source'] . '</i>]';
+			//$temp .= '</div>';
+			$temp .= '</div>';
+			$temp .= "\n";
+		} 
+		return $temp;
 	} 
 
 	/**
